@@ -59,7 +59,9 @@ namespace StudyMover
             if (_scuStore == null)
                 _scuStore = new DicomServer<CStoreSCU>(_MoverSettings.LocalPort);
             DicomClient clt = new DicomClient();
-
+            cmoveRequest.OnResponseReceived = (request, response) =>
+            {
+            };
             // Add request to Dicom Client Object.
             clt.AddRequest(cmoveRequest);
 

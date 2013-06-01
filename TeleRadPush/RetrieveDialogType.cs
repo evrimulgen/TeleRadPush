@@ -66,6 +66,7 @@ namespace TeleRadPush
 
             for (i = 0; i <= DataGridView1.RowCount - 1; i++)
             {
+                if (DataGridView1.Rows[i].Cells[13].Value == DBNull.Value || DataGridView1.Rows[i].Cells[14].Value == DBNull.Value) return 0; ;
                 if (Convert.ToBoolean(DataGridView1.Rows[i].Cells[13].Value) == false & Convert.ToBoolean(DataGridView1.Rows[i].Cells[14].Value) == false)
                 {
                     m_SelectedStyle = new DataGridViewCellStyle();
@@ -209,20 +210,20 @@ namespace TeleRadPush
 
         private void chkAll_CheckedChanged(object sender, EventArgs e)
         {
-                chkCR.Checked = chkAll.Checked;
-                chkCT.Checked = chkAll.Checked;
-                chkDX.Checked = chkAll.Checked;
-                chkES.Checked = chkAll.Checked;
-                chkMG.Checked = chkAll.Checked;
-                chkMR.Checked = chkAll.Checked;
-                chkNM.Checked = chkAll.Checked;
-                chkOT.Checked = chkAll.Checked;
-                chkPT.Checked = chkAll.Checked;
-                chkRF.Checked = chkAll.Checked;
-                chkRT.Checked = chkAll.Checked;
-                chkSC.Checked = chkAll.Checked;
-                chkUS.Checked = chkAll.Checked;
-                chkXA.Checked = chkAll.Checked;
+            chkCR.Checked = chkAll.Checked;
+            chkCT.Checked = chkAll.Checked;
+            chkDX.Checked = chkAll.Checked;
+            chkES.Checked = chkAll.Checked;
+            chkMG.Checked = chkAll.Checked;
+            chkMR.Checked = chkAll.Checked;
+            chkNM.Checked = chkAll.Checked;
+            chkOT.Checked = chkAll.Checked;
+            chkPT.Checked = chkAll.Checked;
+            chkRF.Checked = chkAll.Checked;
+            chkRT.Checked = chkAll.Checked;
+            chkSC.Checked = chkAll.Checked;
+            chkUS.Checked = chkAll.Checked;
+            chkXA.Checked = chkAll.Checked;
         }
 
         private void chkCR_CheckedChanged(object sender, EventArgs e)
@@ -437,6 +438,7 @@ namespace TeleRadPush
         {
             if (DataGridView1.Columns[e.ColumnIndex].Name.Equals("ImgNotes"))
             {
+                if (DataGridView1.Rows[e.RowIndex].Cells["IsNotes"].Value == DBNull.Value) return;
                 if (Convert.ToBoolean(DataGridView1.Rows[e.RowIndex].Cells["IsNotes"].Value) == true)
                 {
                     e.Value = TeleRadPush.Properties.Resources.circle_green;
@@ -444,6 +446,7 @@ namespace TeleRadPush
             }
             if (DataGridView1.Columns[e.ColumnIndex].Name.Equals("ImgReports"))
             {
+                if (DataGridView1.Rows[e.RowIndex].Cells["IsReports"].Value == DBNull.Value) return;
                 if (Convert.ToBoolean(DataGridView1.Rows[e.RowIndex].Cells["IsReports"].Value) == true)
                 {
                     e.Value = TeleRadPush.Properties.Resources.circle_green;

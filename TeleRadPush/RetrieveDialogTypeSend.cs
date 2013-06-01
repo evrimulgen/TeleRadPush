@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Data.Odbc;
 using Microsoft.VisualBasic;
+using System.IO;
 
 namespace TeleRadPush
 {
@@ -197,6 +198,9 @@ namespace TeleRadPush
                 MessageBox.Show("Please Select A Study Node from Tree.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
+
+            if (Directory.Exists(Environment.CurrentDirectory + "\\DICOM") == true)
+                Directory.Delete(Environment.CurrentDirectory + "\\DICOM", true);
 
             SM.MoveStudies(StudyMover.RetriveEntity.Modality, Tree.SelectedNode.Name);
             Viewer viwer = new Viewer(new StudyMover.StudyInstanceProvider());
