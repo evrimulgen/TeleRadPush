@@ -166,17 +166,35 @@ namespace TeleRadPush
             Notes = Interaction.InputBox("Enter Note:", "TeleRad - Client", " ");
 
             string strSQL = "";
+            string centre = " ";
+            Myconnectionclass CN2 = new Myconnectionclass();
+            OdbcCommand Cmd2;
+            OdbcDataReader Rs2;
+            CN2.OpenConnection();
+            Cmd2 = new System.Data.Odbc.OdbcCommand("SELECT * from UserMaster WHERE UserName='" + modMain.UID + "'", CN2.DBConnection);
+            Rs2 = Cmd2.ExecuteReader();
+            if (Rs2.HasRows)
+                centre = Rs2["Centre"].ToString();
+            Rs2.Close();
+            Cmd2.Dispose();
+            CN2.closeconnection();
 
             CN.OpenConnection();
-            Cmd = new System.Data.Odbc.OdbcCommand("SELECT Count(*) AS Kount from Reports WHERE StudyUID='" + StID + "'", CN.DBConnection);
+            Cmd = new System.Data.Odbc.OdbcCommand("SELECT * from Reports WHERE StudyUID='" + StID + "'", CN.DBConnection);
             Rs1 = Cmd.ExecuteReader();
-            if (!Information.IsDBNull(Rs1))
+            if (Rs1.HasRows)
             {
-                strSQL = "UPDATE Reports SET Notes='" + Notes + "', IsNotes=1 WHERE StudyUID='" + StID + "'";
+                if (Notes.Length <= 0)
+                    strSQL = "UPDATE Reports SET IsNotes=0, Centre='" + centre + "' WHERE StudyUID='" + StID + "'";
+                else
+                    strSQL = "UPDATE Reports SET Notes='" + Notes + "', IsNotes=1, Centre='" + centre + "' WHERE StudyUID='" + StID + "'";
             }
             else
             {
-                strSQL = "INSERT INTO Reports (StudyUID, Notes, IsNotes) VALUES ('" + StID + "', '" + Notes + "', 1)";
+                if (Notes.Length <= 0)
+                    strSQL = "INSERT INTO Reports (StudyUID, IsNotes,Centre) VALUES ('" + StID + "',1,'" + centre + "')";
+                else
+                    strSQL = "INSERT INTO Reports (StudyUID, Notes, IsNotes,Centre) VALUES ('" + StID + "', '" + Notes + "', 1,'" + centre + "')";
             }
             Rs1.Close();
             Cmd.Dispose();

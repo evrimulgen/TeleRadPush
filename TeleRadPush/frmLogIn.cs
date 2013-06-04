@@ -29,96 +29,26 @@ namespace TeleRadPush
         private void Command1_Click(object sender, EventArgs e)
         {
             nowConnected = false;
-            if (File.Exists(Environment.CurrentDirectory + "\\RemLog"))
+            CN.OpenConnection();
+            cmd = new System.Data.Odbc.OdbcCommand("SELECT * FROM UserMaster WHERE UserName='" + txtUser.Text + "' AND EncodedPass='" + txtPwd.Text + "'", CN.DBConnection);
+            Rs1 = cmd.ExecuteReader();
+            if (Rs1.HasRows)
             {
-                StreamReader file = new StreamReader(Environment.CurrentDirectory + "\\RemLog");
-                string line = "";
-                int counter = 1;
-                while ((line = file.ReadLine()) != null)
-                {
-                    switch (counter++)
-                    {
-                        case 1:
-                            UID = line;
-                            break;
-                        case 2:
-                            PWD = line;
-                            break;
-                        case 3:
-                            UType = line;
-                            break;
-                        default:
-                            break;
-                    }
-                }
-                if (UID == txtUser.Text & PWD == txtPwd.Text)
-                {
-                    nowConnected = true;
-                }
-                else
-                {
-                    MessageBox.Show("Invalid Login");
-                    txtUser.Focus();
-                    txtUser.SelectionStart = 0;
-                    txtUser.SelectionLength = txtUser.Text.Length;
-                }
+                modMain.UID = txtUser.Text;
+                Rs1.Close();
+                CN.closeconnection();
+                RetrieveDialogType frmRet = new RetrieveDialogType();
+                frmRet.Show();
+                this.Hide();
             }
             else
             {
-                CN.OpenConnection();
-                cmd = new System.Data.Odbc.OdbcCommand("SELECT * FROM UserMaster WHERE UserName='" + txtUser.Text + "' AND EncodedPass='" + txtPwd.Text + "'", CN.DBConnection);
-                Rs1 = cmd.ExecuteReader();
-                if (Rs1.HasRows)
-                {
-                    StreamWriter file = new StreamWriter(Environment.CurrentDirectory + "\\RemLog");
-                    UID = Rs1["UserName"].ToString();
-                    PWD = Rs1["EncodedPass"].ToString();
-                    UType = Rs1["UserType"].ToString();
-                    Rs1.Close();
-                    CN.closeconnection();
-                    file.WriteLine(UID);
-                    file.WriteLine(PWD);
-                    file.WriteLine(UType);
-                    file.Close();
-                    nowConnected = true;
-                }
-                else
-                {
-                    Rs1.Close();
-                    CN.closeconnection();
-                    MessageBox.Show("Invalid Login");
-                    txtUser.Focus();
-                    txtUser.SelectionStart = 0;
-                    txtUser.SelectionLength = txtUser.Text.Length;
-                }
-            }
-
-            if (nowConnected == true)
-            {
-                RetrieveDialogType frmRet = new RetrieveDialogType();
-
-                //this.Hide();
-                if (UType == "1")
-                {
-                    //frmAd.ShowDialog();
-                }
-                if (UType == "2")
-                    frmRet.ShowDialog();
-                if (UType == "3")
-                {
-                    //frmRet.BackColor = Color.SlateBlue
-                    //frmRet.Retrieve.BackColor = Color.DarkSlateBlue
-                    //frmRet.Retrieve.ForeColor = Color.White
-                    //frmRet.btnViewReport.BackColor = Color.DarkSlateBlue
-                    //frmRet.btnViewReport.ForeColor = Color.White
-                    //frmRet.btnRefresh.BackColor = Color.DarkSlateBlue
-                    //frmRet.btnRefresh.ForeColor = Color.White
-                    //frmRet.DataGridView1.BackgroundColor = Color.White
-
-                    frmRet.ShowDialog();
-                }
-
-                this.Close();
+                Rs1.Close();
+                CN.closeconnection();
+                MessageBox.Show("Invalid Login");
+                txtUser.Focus();
+                txtUser.SelectionStart = 0;
+                txtUser.SelectionLength = txtUser.Text.Length;
             }
         }
 

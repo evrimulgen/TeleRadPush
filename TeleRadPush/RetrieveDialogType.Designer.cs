@@ -131,6 +131,7 @@ namespace TeleRadPush
             this.PatientStudyViewTableAdapter = new TeleRadPush.DicomServerDBDataSet1TableAdapters.PatientStudyViewTableAdapter();
             this.DataGridViewImageColumn1 = new System.Windows.Forms.DataGridViewImageColumn();
             this.DataGridViewImageColumn2 = new System.Windows.Forms.DataGridViewImageColumn();
+            this.btnSendNotes = new System.Windows.Forms.Button();
             this.tableLayoutPanel5.SuspendLayout();
             this.tableLayoutPanel6.SuspendLayout();
             this.tableLayoutPanel12.SuspendLayout();
@@ -660,16 +661,18 @@ namespace TeleRadPush
             this.tableLayoutPanel10.ColumnCount = 1;
             this.tableLayoutPanel10.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel10.Controls.Add(this.btnSend, 0, 0);
-            this.tableLayoutPanel10.Controls.Add(this.btnViewReport, 0, 2);
-            this.tableLayoutPanel10.Controls.Add(this.btnViewNotes, 0, 1);
+            this.tableLayoutPanel10.Controls.Add(this.btnViewReport, 0, 3);
+            this.tableLayoutPanel10.Controls.Add(this.btnViewNotes, 0, 2);
+            this.tableLayoutPanel10.Controls.Add(this.btnSendNotes, 0, 1);
             this.tableLayoutPanel10.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel10.Location = new System.Drawing.Point(6, 6);
             this.tableLayoutPanel10.Name = "tableLayoutPanel10";
-            this.tableLayoutPanel10.RowCount = 4;
+            this.tableLayoutPanel10.RowCount = 5;
             this.tableLayoutPanel10.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
             this.tableLayoutPanel10.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
             this.tableLayoutPanel10.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
-            this.tableLayoutPanel10.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 70F));
+            this.tableLayoutPanel10.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
+            this.tableLayoutPanel10.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 60F));
             this.tableLayoutPanel10.Size = new System.Drawing.Size(109, 414);
             this.tableLayoutPanel10.TabIndex = 0;
             // 
@@ -687,7 +690,7 @@ namespace TeleRadPush
             // btnViewReport
             // 
             this.btnViewReport.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnViewReport.Location = new System.Drawing.Point(3, 85);
+            this.btnViewReport.Location = new System.Drawing.Point(3, 126);
             this.btnViewReport.Name = "btnViewReport";
             this.btnViewReport.Size = new System.Drawing.Size(103, 35);
             this.btnViewReport.TabIndex = 4;
@@ -698,7 +701,7 @@ namespace TeleRadPush
             // btnViewNotes
             // 
             this.btnViewNotes.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnViewNotes.Location = new System.Drawing.Point(3, 44);
+            this.btnViewNotes.Location = new System.Drawing.Point(3, 85);
             this.btnViewNotes.Name = "btnViewNotes";
             this.btnViewNotes.Size = new System.Drawing.Size(103, 35);
             this.btnViewNotes.TabIndex = 5;
@@ -1307,6 +1310,17 @@ namespace TeleRadPush
             this.DataGridViewImageColumn2.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.DataGridViewImageColumn2.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             // 
+            // btnSendNotes
+            // 
+            this.btnSendNotes.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnSendNotes.Location = new System.Drawing.Point(3, 44);
+            this.btnSendNotes.Name = "btnSendNotes";
+            this.btnSendNotes.Size = new System.Drawing.Size(103, 35);
+            this.btnSendNotes.TabIndex = 6;
+            this.btnSendNotes.Text = "Send / Resend Notes";
+            this.btnSendNotes.UseVisualStyleBackColor = true;
+            this.btnSendNotes.Click += new System.EventHandler(this.btnSendNotes_Click);
+            // 
             // RetrieveDialogType
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1320,6 +1334,7 @@ namespace TeleRadPush
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.RetrieveDialogType_FormClosing);
             this.Load += new System.EventHandler(this.RetrieveDialogType_Load);
+            this.Enter += new System.EventHandler(this.RetrieveDialogType_Enter);
             this.tableLayoutPanel5.ResumeLayout(false);
             this.tableLayoutPanel6.ResumeLayout(false);
             this.tableLayoutPanel6.PerformLayout();
@@ -1438,5 +1453,6 @@ namespace TeleRadPush
         private System.Windows.Forms.DataGridViewCheckBoxColumn IsNotes;
         private System.Windows.Forms.DataGridViewCheckBoxColumn IsReports;
         public System.Windows.Forms.Button btnViewNotes;
+        public System.Windows.Forms.Button btnSendNotes;
     }
 }

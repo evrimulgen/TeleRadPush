@@ -18,6 +18,9 @@ namespace TeleRadPush
         Myconnectionclass CN1 = new Myconnectionclass();
         OdbcCommand CMD1;
         OdbcDataReader RS2;
+        Myconnectionclass CN = new Myconnectionclass();
+        OdbcCommand Cmd;
+        OdbcDataReader Rs1;
         int i;
         Color WoN_WoR;
         Color WN_WoR;
@@ -477,6 +480,55 @@ namespace TeleRadPush
             Rs1.Close();
             Cmd.Dispose();
             CN.closeconnection();
+        }
+
+        private void btnSendNotes_Click(object sender, EventArgs e)
+        {
+            if (DataGridView1.SelectedCells[14].Value.ToString() == true.ToString())
+            {
+                MessageBox.Show("Report is ready, so you cannot Send / Resend Notes anymore", "TeleRad - Client", MessageBoxButtons.OK);
+                return;
+            }
+
+            String Notes = "";
+            Notes = Interaction.InputBox("Enter Note:", "TeleRad - Client", " ");
+
+            string strSQL = "";
+
+            CN.OpenConnection();
+            Cmd = new System.Data.Odbc.OdbcCommand("SELECT * from Reports WHERE StudyUID='" + DataGridView1.SelectedCells[5].Value.ToString() + "'", CN.DBConnection);
+            Rs1 = Cmd.ExecuteReader();
+            if (Rs1.HasRows)
+            {
+                if (Notes.Length <= 0)
+                    strSQL = "UPDATE Reports SET IsNotes=0 WHERE StudyUID='" + DataGridView1.SelectedCells[5].Value.ToString() + "'";
+                else
+                    strSQL = "UPDATE Reports SET Notes='" + Notes + "', IsNotes=1 WHERE StudyUID='" + DataGridView1.SelectedCells[5].Value.ToString() + "'";
+            }
+            else
+            {
+                if (Notes.Length <= 0)
+                    strSQL = "INSERT INTO Reports (StudyUID, IsNotes) VALUES ('" + DataGridView1.SelectedCells[5].Value.ToString() + "',1)";
+                else
+                    strSQL = "INSERT INTO Reports (StudyUID, Notes, IsNotes) VALUES ('" + DataGridView1.SelectedCells[5].Value.ToString() + "', '" + Notes + "', 1)";
+            }
+            Rs1.Close();
+            Cmd.Dispose();
+            CN.closeconnection();
+
+            CN.OpenConnection();
+            Cmd = new System.Data.Odbc.OdbcCommand(strSQL, CN.DBConnection);
+            Rs1 = Cmd.ExecuteReader();
+            Rs1.Close();
+            Cmd.Dispose();
+            CN.closeconnection();
+            MessageBox.Show("Successfully Sent Study", "TeleRad - Client", MessageBoxButtons.OK);
+            btnRefresh_Click(this, e);
+        }
+
+        private void RetrieveDialogType_Enter(object sender, EventArgs e)
+        {
+            btnRefresh_Click(this, e);
         }
 
     }
